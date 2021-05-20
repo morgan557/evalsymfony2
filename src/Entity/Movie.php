@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MovieRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +53,28 @@ class Movie
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $watchList;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Actor::class, inversedBy="movies")
+     */
+    private $actors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Genre::class, inversedBy="movies")
+     */
+    private $genres;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Studio::class, inversedBy="movies")
+     */
+    private $studio;
+
+    public function __construct()
+    {
+        $this->actors = new ArrayCollection();
+        $this->genres = new ArrayCollection();
+        $this->studio = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +161,78 @@ class Movie
     public function setWatchList(?bool $watchList): self
     {
         $this->watchList = $watchList;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Actor[]
+     */
+    public function getActors(): Collection
+    {
+        return $this->actors;
+    }
+
+    public function addActor(Actor $actor): self
+    {
+        if (!$this->actors->contains($actor)) {
+            $this->actors[] = $actor;
+        }
+
+        return $this;
+    }
+
+    public function removeActor(Actor $actor): self
+    {
+        $this->actors->removeElement($actor);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Genre[]
+     */
+    public function getGenres(): Collection
+    {
+        return $this->genres;
+    }
+
+    public function addGenre(Genre $genre): self
+    {
+        if (!$this->genres->contains($genre)) {
+            $this->genres[] = $genre;
+        }
+
+        return $this;
+    }
+
+    public function removeGenre(Genre $genre): self
+    {
+        $this->genres->removeElement($genre);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Studio[]
+     */
+    public function getStudio(): Collection
+    {
+        return $this->studio;
+    }
+
+    public function addStudio(Studio $studio): self
+    {
+        if (!$this->studio->contains($studio)) {
+            $this->studio[] = $studio;
+        }
+
+        return $this;
+    }
+
+    public function removeStudio(Studio $studio): self
+    {
+        $this->studio->removeElement($studio);
 
         return $this;
     }
