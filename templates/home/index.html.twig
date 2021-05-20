@@ -1,9 +1,61 @@
-{% extends 'base.html.twig' %}
+{% extends "base.html.twig" %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}
+  Accueil 
+      
+    
+  
+{% endblock %}
 
 {% block body %}
 
-<h1>bienvenue sur la page acceuil </h1>
+  <h1>
+    Bienvenue sur la page d'accueil !
+      
+  </h1>
+
+  <div class="row">
+    <div class="col-9">
+      {% for movie in movies %}
+        <div class="card col-4" style="width: 18rem;">
+          <div class="card-body">
+            <a href="/view/{{ movie.id }}">
+              <h5 class="card-title">
+              {{ movie.name }}
+              </h5>
+            </a>
+            {% if movie.image starts with 'http' %}
+              <img style="max-width: 100%" src="{{ movie.image }}" alt={{article.title}} />
+            {% else %}
+              <img style="max-width: 100%" src="/assets/upload/images/{{ movie.image }}" 
+              alt={{ movie.name }}/>
+            {% endif %}
+            <div class="card-text" style=" max-height: 250px;
+                                      height: 250px;
+                                      white-space: nowrap;
+                                      overflow: hidden;
+                                      text-overflow: ellipsis;">
+              {{ movie.synopsis | raw }}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+    {% if genres is defined %}
+      <div class="col-3">
+        <ul class="list-group">
+          {% for genre in genres %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="/showByCategory/{{ genre.id }}">
+                  {{ genre.name }}
+                
+              </a>
+            <span class="badge bg-primary rounded-pill">{{ genre.movies | length }}</span>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  </div>
 
 {% endblock %}
