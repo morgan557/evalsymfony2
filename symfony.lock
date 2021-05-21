@@ -112,6 +112,12 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.4"
     },
+    "fzaninotto/faker": {
+        "version": "v1.9.2"
+    },
+    "joshtronic/php-loremipsum": {
+        "version": "1.0.6"
+    },
     "laminas/laminas-code": {
         "version": "4.3.0"
     },
