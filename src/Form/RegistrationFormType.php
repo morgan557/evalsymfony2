@@ -24,8 +24,8 @@ class RegistrationFormType extends AbstractType
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
                     ]),
-                ],
-            ])
+               ],
+           ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
@@ -36,8 +36,8 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Please enter a password',
                     ]),
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'Your password should be at least {{ limit }} characters',
+                        'min' => 1,
+                        'minMessage' => 'Votre mot de passe doit faire{{ limit }} characters',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
