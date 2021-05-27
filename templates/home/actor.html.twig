@@ -2,6 +2,7 @@
 
 {% block title %}
     Films
+                
             
         
     
@@ -11,23 +12,21 @@
 
     <h1 class="text-center p-5">
         voici tous nos Acteurs
-                            
-        {% if app.user %}
-        <div class="mb-3">
-            vous etes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">deconnection</a>
-        </div>
-    {% endif %}             
+                                                
             
     </h1>
     {% if app.user %}
         <div class="mb-3">
             vous etes connecté en tant que 
+                                    
                         
             {{ app.user.username }}
             , 
+                                    
                         
             <a href="{{ path('app_logout') }}">
                 deconnection
+                                            
                             
             </a>
         </div>
