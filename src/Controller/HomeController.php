@@ -19,8 +19,11 @@ class HomeController extends AbstractController
 {
     private $repoMovie;
 
-    public function __construct(MovieRepository $repoMovie){
+    public function __construct(MovieRepository $repoMovie,GenreRepository $repoGenre, ActorRepository $repoActor, StudioRepository $repoStudio){
         $this->repoMovie = $repoMovie;
+        $this->repoGenre = $repoGenre;
+        $this->repoactor = $repoActor;
+        $this->repoStudio = $repoStudio;
     }
 
     /**
@@ -33,6 +36,7 @@ class HomeController extends AbstractController
      $actors = $repoActor->findAll();
      $studios = $repoStudio->findAll();
      $users = $repoUser->findAll();
+     
        
         return $this->render("home/index.html.twig",[
             'movies' => $movies,
@@ -48,21 +52,43 @@ class HomeController extends AbstractController
     public function about(): Response
     {
         return $this->render("home/about.html.twig");
+    } 
+
+    
+  
+        /**
+     * @Route("/genre", name="genre")
+     */
+    public function genre(): Response
+    {
+        $genres = $this->repoGenre->findAll();
+        return $this->render('home/genre.html.twig',[
+            'genres'=>$genres
+        ]);
     }
-    //   /**
-    //  * @Route("/actor", name="actor")
-    //  */
-    // public function actor(GenreRepository $repoActor): Response
-    // {   
-    //     $movies = $this->repoMovie->findAll();
-    //     $actors = $repoActor->findAll();
-    //    // if(!$movie)
-    //    // return $this->redirectToRoute('home');
-    //     return $this->render("home/actor.html.twig",[
-    //         'movies'=>$movies,
-    //         'actor'=>$actors
-    //     ]);
-    // }
+    /**
+     * @Route("/showByGenre/{id}", name="showByGenre")
+     */
+    public function showByGenre(Genre $genre): Response
+    {
+        if(!$genre)
+            return $this->redirectToRoute('home');
+        return $this->render("home/index.html.twig",[
+            'movies'=>$genre->getMovies(),
+        ]);
+    }
+    
+
+       /**
+     * @Route("/actor", name="actor")
+     */
+    public function actor(): Response
+    {
+        $actor = $this->repoactor->findAll();
+        return $this->render('home/actor.html.twig',[
+            'actors'=>$actor
+        ]);
+    }
 
       /**
      * @Route("/showByActor/{id}", name="showByActor")
@@ -76,6 +102,17 @@ class HomeController extends AbstractController
         ]);
     }
 
+
+        /**
+     * @Route("/studio", name="studio")
+     */
+    public function studio(): Response
+    {
+        $studio = $this->repoStudio->findAll();
+        return $this->render('home/studio.html.twig',[
+            'studios'=>$studio
+        ]);
+    }
        /**
      * @Route("/showByStudio/{id}", name="showByStudio")
      */
@@ -99,26 +136,4 @@ class HomeController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/showByGenre/{id}", name="showByGenre")
-     */
-    public function showByGenre(Genre $genre): Response
-    {
-        if(!$genre)
-            return $this->redirectToRoute('home');
-        return $this->render("home/index.html.twig",[
-            'movies'=>$genre->getMovies(),
-        ]);
-    }
-    // /**
-    //  * @Route("/admin", name="admin")
-    //  */
-    // public function denyAccess(User $user): Response
-    // {
-    //     if($user)
-    //         return $this->redirectToRoute('home');
-    //     return $this->render("home/index.html.twig",[
-    //         'movies'=>$genre->getMovies(),
-    //     ]);
-    // }
 }

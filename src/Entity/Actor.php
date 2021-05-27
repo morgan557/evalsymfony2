@@ -112,7 +112,7 @@ class Actor
         return $this;
     }
     public function __toString(){
-        return $this->firstName;
+        return $this->firstName." ".$this->lastName;
     }
-
+    
 }

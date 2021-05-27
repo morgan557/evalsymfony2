@@ -1,26 +1,58 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-   
+    Films
+            
+        
+    
 {% endblock %}
 
 {% block body %}
-    <h1>
-        page acteur
+
+    <h1 class="text-center p-5">
+        voici tous nos Acteurs
+                            
+        {% if app.user %}
+        <div class="mb-3">
+            vous etes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">deconnection</a>
+        </div>
+    {% endif %}             
+            
     </h1>
-    {# <div class="row">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        {{ movie.name }}
-                    </h5>
-                    {% if movie.image starts with 'http' %}
-                        <img style="max-width: 100%" src="{{movie.image}}" alt="{{movie.title}}"/>
-                    {% else %}
-                        <img style="max-width: 100%" src="/assets/upload/images/{{movie.image}}" alt="{{movie.title}}"/>
-                    {% endif %}
-                    <div class="card-text"> {{ article.synopsis | raw}}</div>
+    {% if app.user %}
+        <div class="mb-3">
+            vous etes connecté en tant que 
+                        
+            {{ app.user.username }}
+            , 
+                        
+            <a href="{{ path('app_logout') }}">
+                deconnection
+                            
+            </a>
+        </div>
+    {% endif %}
+
+</div></div>{% if actors is defined %}
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for actor in actors %}
+
+            <div class="col">
+                <div class="card h-100">
+                    <a href="/showByActor/{{ actor.id }}" class="link-dark" style="text-decoration: none">
+                        <div class="card-body d-flex justify-content-between">
+                            <h5 class="card-title">
+                                {{ actor.firstName }}
+                                {{ actor.lastName }}
+                            </h5>
+                            <p class="card-text">
+                                {{ actor.movies | length }}
+                            </p>
+                        </div>
+                    </a>
                 </div>
             </div>
-    </div> #}
-{% endblock %}
+        {% endfor %}
+    </div>
+</div>{% endif %}{% endblock %}

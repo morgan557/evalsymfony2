@@ -77,7 +77,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
     }
 
     public function checkCredentials($credentials, UserInterface $user)
-    {
+    {   
         return $this->passwordEncoder->isPasswordValid($user, $credentials['password']);
     }
 
@@ -85,7 +85,7 @@ class UserAuthenticator extends AbstractFormLoginAuthenticator implements Passwo
      * Used to upgrade (rehash) the user's password automatically over time.
      */
     public function getPassword($credentials): ?string
-    {
+    { 
         return $credentials['password'];
     }
 

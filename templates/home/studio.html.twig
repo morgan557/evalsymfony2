@@ -1,0 +1,48 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Films
+    
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center p-5">
+       voici nos Studios
+            
+    </h1>
+    {% if app.user %}
+        <div class="mb-3">
+            vous etes connecté en tant que 
+            {{ app.user.username }}
+            , 
+            <a href="{{ path('app_logout') }}">
+                deconnection
+            </a>
+        </div>
+    {% endif %}
+    {% if studios is defined %}
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for studio in studios %}
+
+                    <div class="col">
+                        <div class="card h-100">
+                            <a href="/showByStudio/{{ studio.id }}" class="link-dark" style="text-decoration: none">
+                                <div class="card-body d-flex justify-content-between">
+                                    <h5 class="card-title">
+                                        {{ studio.name }}
+                                    </h5>
+                                    <p class="card-text">
+                                        {{ studio.movies | length }}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+{% endblock %}

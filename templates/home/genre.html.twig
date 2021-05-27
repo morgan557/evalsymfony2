@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    Films
+    
+{% endblock %}
+
+{% block body %}
+
+    <h1 class="text-center p-5">
+        voici tous nos Genres 
+            
+    </h1>
+    {% if app.user %}
+        <div class="mb-3">
+            vous etes connecté en tant que 
+            {{ app.user.username }}
+            , 
+            <a href="{{ path('app_logout') }}">
+                deconnection
+            </a>
+        </div>
+    {% endif %}
+    {% if genres is defined %}
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                {% for genre in genres %}
+                    <div class="col">
+                        <div class="card h-100">
+                            <a href="/showBygenre/{{ genre.id }}" class="link-dark" style="text-decoration: none">
+                                <div class="card-body d-flex justify-content-between">
+                                    <h5 class="card-title">
+                                        {{ genre.name }}
+                                    </h5>
+                                    <p class="card-text">
+                                        {{ genre.movies | length }}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
