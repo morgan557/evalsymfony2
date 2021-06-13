@@ -18,7 +18,13 @@ class MovieRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Movie::class);
     }
-
+    public function updateSeen(Movie $movie): void
+    {
+       $param = true;
+        $movie->setSeen($param);
+        $this->_em->persist($movie);
+        $this->_em->flush();
+    }
     // /**
     //  * @return Movie[] Returns an array of Movie objects
     //  */

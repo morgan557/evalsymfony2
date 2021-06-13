@@ -1,3 +1,9 @@
-#index:
+# index:
 #    path: /
-#    controller: App\Controller\DefaultController::index
+#    controller: App\Controller\homeController::index
+
+# edit_movie:
+#   url: /edit/:id
+#   class:   sfPropelRoute
+#   param:   { module: job, action: edit, sf_format: html }
+#   requirements: { sf_method: get }

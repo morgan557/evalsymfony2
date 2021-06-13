@@ -1,0 +1,56 @@
+{% extends "base.html.twig" %}
+{% block title %}
+    edit film
+        
+    
+{% endblock %}
+
+{% block body %}
+<body>
+    <div class="jumbotron text-center">
+        <h1>
+            editer un film 
+        </h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            {{ form_start(form) }}
+            <table>
+                <tbody>
+                    <tr>
+                        <th>
+                            Titre:
+                        </th>
+                        <td>
+                            {{ form_widget(form.name) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            synopsis:
+                        </th>
+                        <td>
+                            {{ form_widget(form.synopsis) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            mettre se film comme vu :
+                        </th>
+                        <td>
+                            {{ form_widget(form.seen) }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <td>
+                            {{ form_widget(form.save) }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            {{ form_end(form) }}
+        </div>
+    </div>
+</body></html>
+{% endblock %}

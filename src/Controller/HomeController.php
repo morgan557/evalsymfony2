@@ -13,7 +13,13 @@ use App\Repository\MovieRepository;
 use App\Repository\StudioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class HomeController extends AbstractController
 {
@@ -46,16 +52,48 @@ class HomeController extends AbstractController
             'users'=>$users
         ]);
     }
+    
+    // fonction qui ne marche pour editer les films 
+     /**
+     * @Route("/edit/{id}", name="edit_movie")
+     * 
+     */
+    public function updateMovie (Request $request,$id){
+        $movie=$this->getDoctrine()->getRepository(Movie::class);
+        $movie = $movie->find($id);
+
+        if(!$movie){
+            throw $this->createNotFoundException(
+                'There are no movies with the following id: ' . $id
+            ); 
+        }
+        $form = $this->createFormBuilder($movie)
+        ->add('name', TextType::class)
+        ->add('synopsis', TextareaType::class)
+        ->add('seen', CheckboxType::class)
+        ->add('save', SubmitType::class, array('label' => 'Editer'))
+        ->getForm();
+    $form->handleRequest($request);
+    if ($form->isSubmitted()) {
+        $em = $this->getDoctrine()->getManager();
+        $movie = $form->getData();
+        $em->flush();
+        return $this->redirect($this->generateUrl('home'));
+    }
+    return $this->render(
+        'home/edit.html.twig',
+        array('form' => $form->createView())
+    );
+}
+    
            /**
-     * @Route("/about", name="about")
+     * @Route("/about" , name="about")
      */
     public function about(): Response
     {
         return $this->render("home/about.html.twig");
     } 
 
-    
-  
         /**
      * @Route("/genre", name="genre")
      */
@@ -77,7 +115,7 @@ class HomeController extends AbstractController
             'movies'=>$genre->getMovies(),
         ]);
     }
-    
+     
 
        /**
      * @Route("/actor", name="actor")
@@ -91,7 +129,7 @@ class HomeController extends AbstractController
     }
 
       /**
-     * @Route("/showByActor/{id}", name="showByActor")
+     * @Route("/showByActor/{id}/", name="showByActor")
      */
     public function showByActor(Actor $actor): Response
     {
@@ -136,4 +174,16 @@ class HomeController extends AbstractController
         ]);
     }
 
+     /**
+     * @Route("/DisplayMovieNotSeen/", name="movienotseen")
+     */
+    public function DisplayMovieNotSeen(MovieRepository $repoMovie): Response
+    { $movies = $this->repoMovie->findBy(array('seen'=>'false'));
+        if(!$movies)
+            return $this->redirectToRoute('home');
+             
+        return $this->render("home/movienotseen.html.twig",[
+            'movies'=>$movies
+        ]);
+    }
 }
