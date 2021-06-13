@@ -15,7 +15,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
@@ -53,7 +52,6 @@ class HomeController extends AbstractController
         ]);
     }
     
-    // fonction qui ne marche pour editer les films 
      /**
      * @Route("/edit/{id}", name="edit_movie")
      * 
@@ -179,8 +177,8 @@ class HomeController extends AbstractController
      */
     public function DisplayMovieNotSeen(MovieRepository $repoMovie): Response
     { $movies = $this->repoMovie->findBy(array('seen'=>'false'));
-        if(!$movies)
-            return $this->redirectToRoute('home');
+        // if(!$movies)
+        //     return $this->redirectToRoute('home');
              
         return $this->render("home/movienotseen.html.twig",[
             'movies'=>$movies

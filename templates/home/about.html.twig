@@ -1,22 +1,29 @@
 {% extends "base.html.twig" %}
 
-{% block title %}
-   
-{% endblock %}
+{% block title %}{% endblock %}
 
 {% block body %}
-   
+
     {% if app.user %}
-    <div class="mb-3">
-        vous etes connecté en tant que {{ app.user.username }}, <a href="{{ path('app_logout') }}">deconnection</a>
-    </div>
-{% endif %}
-<h2>A propos</h2>
-<p>Cette application a été réaliser par Morgan Achache dans le cadre de la formation develloppeur Fullstack de l'it Akademy.<br>
-J'ai utilisé un produit libre de droit bootswatch https://bootswatch.com/, ainsi que 2 image de film provenant du site sens critique et imdb.<br>
-librement inspirer par l'article de https://www.comment-devenir-developpeur.com/symfony-5/creer-un-crud-avec-symfony-et-doctrine/<br>
-</p>
+        <div class="mb-3">
+            vous etes connecté en tant que 
+            {{ app.user.username }}
+            , 
+            <a href="{{ path('app_logout') }}">
+                deconnection
+            </a>
+        </div>
+    {% endif %}
+    <h2>
+        A propos
+    </h2>
+    <p>
+        Cette application a été réaliser par Morgan Achache dans le cadre de la formation develloppeur Fullstack de l'it Akademy.
+        <br>
+            J'ai utilisé un produit libre de droit bootswatch https://bootswatch.com/, ainsi que 2 image de film provenant du site sens critique et imdb.
+            <br>
+                librement inspirer par l'article de https://www.comment-devenir-developpeur.com/symfony-5/creer-un-crud-avec-symfony-et-doctrine/
+                <br></p>
 
-
-
-{% endblock %}
+            {% endblock %}
+            
